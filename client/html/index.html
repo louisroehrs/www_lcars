@@ -2,7 +2,7 @@
   <head>
     
     <meta name='apple-mobile-web-app-capable' content='YES' />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width;initial-scale=1">
 
     <title>Soundbox</title>
     <script type="text/javascript" src="../js/jquery-1.6.2.js"></script>
@@ -17,13 +17,14 @@
     font-face: bold;
     src: url("../fonts/okuda/Okuda Bold.otf") format("opentype");
   }
-  body { 
+  body,html { 
     background-color:#000;
     font-family: Okuda,  Calibri, arial, helvetica;
     font-size: 40px;
+    overscroll-behavior: none;
   }
       
-  .header, .headertall, .headerbutton, .footer, .lefter, .footertall,.headerblack {
+  .header, .headertall, .headerbutton, .headertitle, .footer, .lefter, .footertall,.headerblack {
     color: #000;
     background-color: rgba(200,225,250,1);
     font-family: bold Okuda 25pt;
@@ -36,9 +37,16 @@
   .headertall,.headerblack {
       height:90px;
   }
-  .headerblack {
+
+  .headertitle {
     background-color: black;
     color: rgba(186,171,98,1);
+    font-size:70px;
+    line-height:74%;
+    margin-left:10px;
+    margin-top:0px;
+    border-radius:0px;
+    float:right;
   }
 
   .lefter, .lefterwide {
@@ -53,15 +61,16 @@
   .lefterwide {
     clear:both;
     width: 100px;
-    height:250px;
+    height:400px;
     padding-left: 10px;
-    background:red;
+    background:rgb(230,230,180);
     margin-bottom:5px;
-    margin-left:5px;
+    margin-left:4px;
     margin-right:10px;
     border-radius:0px;
-
   }
+
+
   .footer {
     clear:both;
     margin:4px;
@@ -107,18 +116,6 @@
     border-bottom-right-radius:10px;
   }
 
-  .cell {
-    color:#000;
-    background-color: rgba(100,150,250,1);
-    margin:4px;
-    margin-left:40px;
-    margin-right:40px;
-    min-height:40px;
-    padding:3px;
-    padding-left:10px;
-    border-top-right-radius:10px;
-    border-bottom-right-radius:10px;
-  }
 
   #nowplaying { 
     position:fixed;
@@ -146,7 +143,17 @@
   }
 
   #videos {
-    margin-top: 30px;
+    margin-top: 10px;
+    overflow-x: hidden;
+
+  }
+
+  .scrolling {
+    overflow-y: scroll;
+    overflow-x: none;
+    width:95%;
+    height:300px;
+    overscroll-behavior:none;       
   }
 
   .isplaying {
@@ -204,7 +211,7 @@
 
     
     float:left;
-    min-width:100px;
+    min-width:80px;
     border-radius:10px;
     margin-top:5px;
   }
@@ -216,11 +223,6 @@
     border-top-left-radius:0px;
   }
 
-  #videos {
-    overflow-y: scroll;
-    height:auto;
-  }
-      
 
   </style>      
 
@@ -243,9 +245,9 @@ jQuery(document).ready( function() {
   }
 
   function resize() {
-    var newHeight = $(window).height() - $('#videos').offset().top-10;
+    var newHeight = $(window).height() - $('.scrolling').offset().top-60;
     console.log('resize' + newHeight);
-    $('#videos').css('height',newHeight);
+    $('.scrolling').css('height',newHeight);
   }
   
   $(window).resize( resize);
@@ -292,8 +294,8 @@ jQuery(document).ready( function() {
 
   function listAudios(element,mediaListing) {
     $(element).empty();
-    $(element).append('<div class="headerbutton">X</div><div class="gap"></div><div class="header">' + "SoundBox" + '</div>');
-    var audios = $('<div class="list"></div>').appendTo($(element));
+    $(element).append('<div class="headertitle">SOUNDBOX</div><div class="gap"></div><div class="header">' + "&nbsp;" + '</div>');
+    var audios = $('<div class="scrolling"></div>').appendTo($(element));
     mediaListing.forEach( function (directory) {
       var group = $('<div></div>')
       group.append("<div class='lefterwide'>" + directory.directory + "</div>");
@@ -322,7 +324,7 @@ jQuery(document).ready( function() {
                           "deny_1.wav",
                           "deny_2.wav",
                           "deny_3.wav",
-                          "enter_authorization_code.wav",
+                          "login.wav",
                           "executed.wav",
                           "hail_1.wav",
                           "hail_2.wav"
@@ -450,17 +452,6 @@ jQuery(document).ready( function() {
 </script>
 </head>
   <body>
-    <div class='lefter'></div><div class='headerblack' id="playing">make a selection</div>
-
-    <div class="headerbutton addcategory" >NewGroup</div><div class="gap"></div>
-
-    <div class="headerbutton isplaying"  id="pause">Pause</div><div class="gap isplaying"></div>
-    <div class="headerbutton isplaying" id="stop">STOP</div><div class="gap isplaying"></div>
-
-    <div class="headerbutton ispaused" id="resume">Resume</div><div class="gap ispaused"></div>
-    <div class="headerbutton" id="louder">+</div><div class="gap"></div>
-    <div class="headerbutton" id="quieter">-</div><div class="gap"></div>
-    <div class="footertall"></div>
     <div id="videos">
     </div>
   </body>

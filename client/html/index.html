@@ -294,7 +294,7 @@ jQuery(document).ready( function() {
 
   function listAudios(element,mediaListing) {
     $(element).empty();
-    $(element).append('<div class="headertitle">SOUNDBOX</div><div class="gap"></div><div class="header">' + "&nbsp;" + '</div>');
+    $(element).append('<div class="headertitle">SOUNDBOX</div><div class="gap"></div><div class="headerbutton" onclick=location.href="synth.html">SYNTH</div><div class="header">' + "&nbsp;" + '</div>');
     var audios = $('<div class="scrolling"></div>').appendTo($(element));
     mediaListing.forEach( function (directory) {
       var group = $('<div></div>')

@@ -1,332 +1,366 @@
-
-
 <html>
   <head>
-
-<meta name='apple-mobile-web-app-capable' content='YES' />
-<meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <meta name='apple-mobile-web-app-capable' content='YES' />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <title>Soundbox</title>
-<!--    <script type="text/javascript" src="../js/jquery-3.4.1.js"></script> -->
     <script type="text/javascript" src="../js/jquery-1.6.2.js"></script>
+
+  <style>
+  @font-face {
+    font-family: Okuda;
+    src: url("../fonts/okuda/Okuda.otf") format("opentype");
+  }
+  @font-face {
+    font-family:Okuda;
+    font-face: bold;
+    src: url("../fonts/okuda/Okuda Bold.otf") format("opentype");
+  }
+  body { 
+    background-color:#000;
+    font-family: Okuda,  Calibri, arial, helvetica;
+    font-size: 40px;
+  }
+      
+  .header, .headertall, .headerbutton, .footer, .lefter, .footertall,.headerblack {
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family: bold Okuda 25pt;
+    margin:4px;
+    padding:3px;
+    padding-left:10px;
+    border-top-left-radius:20px;
+  }
+
+  .headertall,.headerblack {
+      height:90px;
+  }
+  .headerblack {
+    background-color: black;
+    color: rgba(186,171,98,1);
+  }
+
+  .lefter, .lefterwide {
+    float:left;
+    width: 12px;
+    height:90px;
+    margin-top:0px;
+    margin-right:10px;
+    border-radius:0px;
+  }
+  
+  .lefterwide {
+    clear:both;
+    width: 100px;
+    height:250px;
+    padding-left: 10px;
+    background:red;
+    margin-bottom:5px;
+    margin-left:5px;
+    margin-right:10px;
+    border-radius:0px;
+
+  }
+  .footer {
+    clear:both;
+    margin:4px;
+    height:20px;
+    padding:3px;
+    padding-left:10px;
+    margin-bottom:20px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+    width:100%;
+  }
+
+  .footertall {
+    height:50px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+  }   
+
+  .headerbutton {
+    float:right;
+    margin-right:10px;
+    height:30px;
+  }
+
+  .gap {
+    background-color: rgba(0,0,0,1);
+    float:right;
+    width:4px;
+    margin-right:4px;
+    height:57px;
+  }
+
+  .item {
+    color:#000;
+    background-color: rgba(100,150,250,1);
+    margin:4px;
+    margin-left:40px;
+    margin-right:40px;
+    min-height:40px;
+    padding:3px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+  }
+
+  .cell {
+    color:#000;
+    background-color: rgba(100,150,250,1);
+    margin:4px;
+    margin-left:40px;
+    margin-right:40px;
+    min-height:40px;
+    padding:3px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+  }
+
+  #nowplaying { 
+    position:fixed;
+    background-color:#ddd;
+    right:0px;
+    top:0px;
+    left:0px;
+    padding:3px;
+    -webkit-box-shadow: 0px 1px 1px #444;
+    box-shadow: 1px 1px 1px #444;
+  }
+  
+  #npshadow {
+    min-height:42px;
+  }
+
+
+  #nowplaying { 
+    background-color:black;
+    color:  rgba( 243,243,200,0.5);
+    margin:4px;
+    font-size:12vw;
+    height:90px;
+    padding:3px;
+  }
+
+  #videos {
+    margin-top: 30px;
+  }
+
+  .isplaying {
+    display:none;
+  }
+  .isstopped {
+    display:block;
+  }
+  .ispaused {
+    display:none;
+  }
+
+  .videocategory {
+    display:grid;
+    grid-gap:4px;
+    grid-template-columns: 25px auto 50px 12px;
+    grid-auto-rows: minmax(20px, auto);
+    margin-bottom:20px;
+    margin-left:5px;
+    margin-right:5px;
+  }
+
+  .gridheader {
+    grid-column: 1/3;
+    padding-left:15px;
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family: bold Okuda 25pt;
+    border-top-left-radius:20px;
+  }
+
+  .gridheaderbutton {
+    grid-column: 3/5;
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family: bold Okuda 25pt;
+    border-radius:0px;
+    text-align:center;
+  }
+  .gridlefter {
+    background-color: rgba(200,225,250,1);
+    grid-column: 1/2;
+    border-radius:0px;
+  }
+  .griditem {
+    grid-column: 2/4;
+    color:#000;
+    background-color: rgba(100,150,250,1);
+    margin-left:10px;
+    min-height:40px;
+    padding:3px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+
     
-    <!-- <style>
-      body { 
-          background-color:#ccc;
-          font-family: Calibri, arial, helvetica;
-      }
+    float:left;
+    min-width:100px;
+    border-radius:10px;
+    margin-top:5px;
+  }
 
-    .header, .addfile,.addcategory {
-          font:bold 20px helvetica;
-          color: #333;
-          text-shadow: -1px -1px 1px #fff;
-      }
+  .gridfooter {
+    background-color: rgba(200,225,250,1);
+    grid-column: 1/5;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+  }
 
-      .addfile {
-          float:right;
-          margin-right:10px;
-      }
-
-      .list div {
-          background-color:#fff;
-          margin:4px;
-          min-height:40px;
-          padding:3px;
-          border-radius:5px;
-          -webkit-box-shadow: 0px 1px 2px #444;
-          box-shadow: 1px 1px 2px #444;
-      }
-
-
-
-      #np { 
-          position:fixed;
-          background-color:#ddd;
-          right:0px;
-          top:0px;
-          left:0px;
-          padding:3px;
-          -webkit-box-shadow: 0px 1px 1px #444;
-          box-shadow: 1px 1px 1px #444;
-      }
-      
-      #npshadow {
-          min-height:84px;
-      }
-
-      #stop, #pause, #rewind, #forward, #resume, #louder, #quieter,  #edit { 
-          background-color: rgba( 255,255,255,0.5);
-          float:left;
-          margin:4px;
-          min-height:20px;
-          padding:3px;
-          border-radius:5px;
-      }
-
-    </style> -->
-
-    <style>
-      @font-face {
-	  font-family: Okuda;
-	  src: url("../fonts/okuda/Okuda.otf") format("opentype");
-      }
-      @font-face {
-          font-family:Okuda;
-	  font-face: bold;
-          src: url("../fonts/okuda/Okuda Bold.otf") format("opentype");
-      }
-      body { 
-          background-color:#000;
-          font-family: Okuda,  Calibri, arial, helvetica;
-	  font-size: 40px;
-      }
-
-      .header, .headerbutton, .footer, .lefter, .footertall,.headerblack {
-          color: #000;
-	  background-color: rgba(200,225,250,1);
-	  font-family: bold Okuda 25pt;
-          margin:4px;
-          height:90px;
-          padding:3px;
-	  padding-left:10px;
-          border-top-left-radius:20px;
-      }
-
-      .headerblack {
-	  background-color: black;
-	  color: rgba(186,171,98,1);
-      }
-
-      .lefter {
-	  float:left;
-	  width: 12px;
-	  height:90px;
-	  margin-top:0px;
-	  margin-right:10px;
-	  border-radius:0px;
-      }
-      .footer {
-          margin:4px;
-          height:20px;
-          padding:3px;
-	  padding-left:10px;
-	  margin-bottom:20px;
-          border-bottom-left-radius:20px;
-	  border-top-left-radius:0px;
-      }
-
-      .footertall {
-	  height:50px;
-          border-bottom-left-radius:20px;
-	  border-top-left-radius:0px;
-      }	  
-
-      .headerbutton {
-          float:right;
-          margin-right:10px;
-	  margin-top:0px;
-	  height:30px;
-      }
-
-      .gap {
-	  background-color: rgba(0,0,0,1);
-          float:right;
-	  width:4px;
-          margin-right:4px;
-	  height:57px;
-      }
-
-      .item {
-	  color:#000;
-          background-color: rgba(100,150,250,1);
-          margin:4px;
- 	  margin-left:40px;
-	  margin-right:40px;
-          min-height:40px;
-          padding:3px;
-	  padding-left:10px;
-          border-top-right-radius:10px;
-	  border-bottom-right-radius:10px;
-     }
-
-      #nowplaying { 
-          position:fixed;
-          background-color:#ddd;
-          right:0px;
-          top:0px;
-          left:0px;
-          padding:3px;
-          -webkit-box-shadow: 0px 1px 1px #444;
-          box-shadow: 1px 1px 1px #444;
-      }
-      
-      #npshadow {
-          min-height:42px;
-      }
-
-
-      #nowplaying { 
-          background-color:black;
-	  color:  rgba( 243,243,200,0.5);
-          margin:4px;
-          font-size:12vw;
-          height:90px;
-          padding:3px;
-      }
-
-      #videos {
-	  margin-top: 30px;
-      }
-
-      
-      .isplaying {
-          display:none;
-      }
-      .isstopped {
-          display:block;
-      }
-      .ispaused {
-          display:none;
-      }
-
-
-      .videocategory {
-	  display:grid;
-	  grid-gap:4px;
-	  grid-template-columns: 25px auto 50px 12px;
-	  grid-auto-rows: minmax(20px, auto);
-	  margin-bottom:20px;
-	  margin-left:5px;
-	  margin-right:5px;
-      }
-
-      .gridheader {
-	  grid-column: 1/3;
-	  padding-left:15px;
-	  color: #000;
-	  background-color: rgba(200,225,250,1);
-	  font-family: bold Okuda 25pt;
-          border-top-left-radius:20px;
-      }
-
-      .gridheaderbutton {
-	  grid-column: 3/5;
-	  color: #000;
-	  background-color: rgba(200,225,250,1);
-	  font-family: bold Okuda 25pt;
-          border-radius:0px;
-	  text-align:center;
-      }
-      .gridlefter {
-	  background-color: rgba(200,225,250,1);
-	  grid-column: 1/2;
-	  border-radius:0px;
-      }
-      .griditem {
-	  grid-column: 2/4;
-	  color:#000;
-          background-color: rgba(100,150,250,1);
- 	  margin-left:10px;
-          min-height:40px;
-          padding:3px;
-	  padding-left:10px;
-          border-top-right-radius:10px;
-	  border-bottom-right-radius:10px;
-      }
-      .gridfooter {
-	  background-color: rgba(200,225,250,1);
-	  grid-column: 1/5;
-          border-bottom-left-radius:20px;
-	  border-top-left-radius:0px;
-      }
-
-      #videos {
-	  overflow-y: scroll;
-	  height:auto;
-      }
+  #videos {
+    overflow-y: scroll;
+    height:auto;
+  }
       
 
-    </style>      
+  </style>      
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 jQuery(document).ready( function() {
   $ = jQuery;
       
-	function listVideosLCARS (videoListing,element) {
-	  $(element).empty();
-	  videoListing.forEach (function (directory) { listDirectory(element, directory)});
+  function listVideosLCARS (videoListing,element) {
+    $(element).empty();
+    videoListing.forEach (function (directory) { listDirectory(element, directory)});
     addActions();
-	}
+  }
+
+  function listAudiosLCARS (videoListing,element) {
+    $(element).empty();
+    listAudios(element, videoListing);
+    addActions();
+  }
 
   function resize() {
     var newHeight = $(window).height() - $('#videos').offset().top-10;
     console.log('resize' + newHeight);
     $('#videos').css('height',newHeight);
   }
-        
+  
   $(window).resize( resize);
   setTimeout(resize,500);
-
-	function listDirectory(element, directory) {
-	  var categoryGC = $('<div class="videocategory"></div>').appendTo($(element));
-	  categoryGC.append('<div class="gridheader">' + directory.directory + '</div><div class="gridheaderbutton addfile" dir="' + directory.directory + '">ADD</div>');
+  
+  function listDirectory(element, directory) {
+    var categoryGC = $('<div class="videocategory"></div>').appendTo($(element));
+    categoryGC.append('<div class="gridheader">' + directory.directory + '</div><div class="gridheaderbutton addfile" dir="' + directory.directory + '">ADD</div>');
     directory.files.forEach( function(video) {
-      videoTitle = video.match(/.*?(?=-\S)/);
-	    categoryGC.append("<div class='gridlefter'></div><div class='griditem' file=\"" + directory.directory +'/' +video + "\">" + videoTitle + "</div>");
+      videoTitle = video.substr(0,video.length-4)
+      categoryGC.append("<div class='gridlefter'></div><div class='griditem' file=\"" + directory.directory +'/' +video + "\">" + videoTitle + "</div>");
     })
-	  categoryGC.append('<div class="gridfooter"></div>');
-	  categoryGC.append('<div>');
-	}	      
-	  
-	function addActions() {
-	  $('.griditem').click( function(e) {
-		  color = $(e.srcElement).css("backgroundColor");
+    categoryGC.append('<div class="gridfooter"></div>');
+    categoryGC.append('<div>');
+  }             
+
+  function resetButtonState(element,color) {
+      element.css("backgroundColor",color)
+  }
+
+  function addActions() {
+    $('.griditem').click( function(e) {
+      color = $(e.srcElement).css("backgroundColor");
       $(e.srcElement).css("backgroundColor","#cfc");
-      setTimeout(function(){$(e.srcElement).css("backgroundColor",color)},500);
+      setTimeout(function() {resetButtonState($(e.srcElement),color)},1000);
       play($(e.srcElement).attr("file"));
     });
     
     $('.addfile').click( function(e) {
       var directory = $(e.srcElement).attr("dir");
       var youtubeurl = prompt('Enter video URL to add to ' + directory);
-		  if (youtubeurl != null) {
+      if (youtubeurl != null) {
         addVideo(youtubeurl,directory);
-		  }
+      }
     });
     $('.addcategory').click( function(e) { 
       var categoryName = prompt('Enter name of new group');
-		  if (categoryName != null) {
+      if (categoryName != null) {
         addCategory(categoryName);
-		  }
+      }
     });
-	}	      
-	  
+  }             
+  
 
-	function listVideos(videoListing,element) {
+  function listAudios(element,mediaListing) {
     $(element).empty();
-    videoListing.forEach( function (directory) {
-		  $(element).append('<div class="headerbutton" dir="' + directory.directory + '">ADD</div><div class="gap"></div><div class="header">' + directory.directory + '</div>');
-      var category = $('<div class="list"></div>').appendTo($(element));
+    $(element).append('<div class="headerbutton">X</div><div class="gap"></div><div class="header">' + "SoundBox" + '</div>');
+    var audios = $('<div class="list"></div>').appendTo($(element));
+    mediaListing.forEach( function (directory) {
+      var group = $('<div></div>')
+      group.append("<div class='lefterwide'>" + directory.directory + "</div>");
+
       directory.files.forEach( function(video) {
-		    
-        category.append("<div class='lefter'></div><div class='item' file=\"" + directory.directory +'/' +video + "\">" + video + "</div>");
+        group.append("<div class='griditem' file=\"" + directory.directory +'/' +video + "\">" + video.substr(0,video.length-4) + "</div>");
       })
-		  $(element).append('<div class="footer"></div>');
-		  $(element).append('<div>');
+      audios.append(group);
     });
-
-	  addActions();
-	}          
-
+    $(element).append('<div class="footer"></div>');
+    $(element).append('<div>');
+    
+  }          
+  
   function getListing() {
-    $.get("/dir", {},
-          function (data) { 
-            listVideosLCARS(data,"#videos")
-          }, "json");
+    data = [ { "directory": "panel",
+               "files" : []},
+             { "directory": "voiced",
+               "files" : ["access_denied.wav",
+                          "accessing.wav",
+                          "affirmative.wav",
+                          "alert_1.wav",
+                          "alert_2.wav",
+                          "damage_1.wav",
+                          "deactivation_complete.wav",
+                          "deny_1.wav",
+                          "deny_2.wav",
+                          "deny_3.wav",
+                          "enter_authorization_code.wav",
+                          "executed.wav",
+                          "hail_1.wav",
+                          "hail_2.wav"
+                         ]
+             }
+           ]
+    
+    for (var i=201; i<221; i++) {
+      if (i != 208)
+        data[0].files.push(i+".wav")
+    }
+
+    // precache the sounds.
+
+    var audios = loadAudio(data);
+//    $.get("/dir", {},
+//          function (data) { 
+    listAudiosLCARS(data,"#videos")
+    //          }, "json");
+    return audios;
   }
 
+  function loadAudio(data) {
+    var audios = {};
+    data.forEach( function (directory) {
+      directory.files.forEach( function (audio) {
+        domAudio = document.createElement("audio");
+        filename = directory.directory+"/"+audio;
+        domAudio.src = "../audio/"+ filename;
+        domAudio.controls = false;
+        audios[filename] = domAudio;
+      })
+    });
+    return audios;
+  }
+                      
+    
+  
   function addVideo(url, directory) {
     jQuery('#playing').html( 'Downloading: '+url);
     $.get("/add", {url:url, directory:directory},
@@ -335,82 +369,71 @@ jQuery(document).ready( function() {
             getListing();
           }, "json");
   }
-
+  
   function addCategory(name) {
     $.get("/addcategory", {name:name},
-		      function (data) {
-			      jQuery('#playing').html( data.name);
-			      if (data.status == 200) {
-			        getListing();
-			      } else {
-			        jQuery('#playing').html( data.name);
-			      }
+          function (data) {
+            jQuery('#playing').html( data.name);
+            if (data.status == 200) {
+              getListing();
+            } else {
+              jQuery('#playing').html( data.name);
+            }
           }, "json");
   }
   
-  getListing();
+  var audios = getListing();
 
-	function play(file) {
-    $('.isplaying').show();
-	  $('.isstopped').hide();
-	  $('.ispaused').hide();
-	  sendomx(file, function (data) {
-		  $('#playing').text(data.playing);
-	  });
+  function play(file) {
+    audios[file].play()
   }
-
-
-	function sendomx (file,callback) {
-	  $.get("/play", {filename:file}, callback , "json");
-	}
-
-
+  
   $('#stop').click( function(e) {
-	  $('.isplaying').hide();
+    $('.isplaying').hide();
     $('.ispaused').hide();
     $('.isstopped').show();
     sendomx("<stop>");
     jQuery('#playing').html("");
   });
-	  
-	  
+  
+  
   $('#pause').click( function(e) {
     $('.ispaused').show();
     $('.isplaying').hide();
     $('.isstopped').hide();
     sendomx("<pause>");
   });
-	  
+  
   $('#resume').click( function(e) {
     $('.ispaused').hide();
     $('.isplaying').show();
     $('.isstopped').show();
     sendomx("<pause>");
   });
-	  
-	  
+  
+  
   $('#rewind').click( function(e) {
     play("<rewind>");
   });
-	  
+  
   $('#backward').click( function(e) {
     play("<backward>");
   });
-	
+  
   $('#forward').click( function(e) {
     play("<forward>");
   });
-	  
+  
   $('#louder').click( function(e) {
     play("<louder>");
   });
-	  
+          
   $('#quieter').click( function(e) {
     play("<quieter>");
   });
-	  
-	  
-	  
+          
+          
+          
   function scrollDiv(element) {
     element= '#playing';
     $(element).css("scrollLeft", $(element).css("scrollLeft")-1);
@@ -419,8 +442,8 @@ jQuery(document).ready( function() {
     }
   }
   setInterval(scrollDiv,200);
-	  
-
+  
+  
 });
 
 
@@ -439,7 +462,6 @@ jQuery(document).ready( function() {
     <div class="headerbutton" id="quieter">-</div><div class="gap"></div>
     <div class="footertall"></div>
     <div id="videos">
-
     </div>
   </body>
   

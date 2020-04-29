@@ -1,0 +1,452 @@
+<html>
+  <head>
+    
+    <meta name='apple-mobile-web-app-capable' content='YES' />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>LightHaus</title>
+    <script type="text/javascript" src="../js/jquery-1.6.2.js"></script>
+
+  <style>
+  @font-face {
+    font-family: Okuda;
+    font-face:normal;
+    src: url("../fonts/okuda/Okuda.otf") format("opentype");
+  }
+  @font-face {
+    font-family:Okuda;
+    font-face: bold;
+    src: url("../fonts/okuda/Okuda Bold.otf") format("opentype");
+  }
+  body,html { 
+    background-color:#000;
+    font-family: Okuda,  Calibri, arial, helvetica;
+    font-size: 40px;
+    overscroll-behavior: none;
+  }
+
+  div {
+    margin:0px;
+    padding:0px;
+  }
+      
+  .header, .headertall, .headerbutton, .headertitle, .footer, .lefter, .footertall,.headerblack {
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family:  Okuda 25pt;
+    margin:4px;
+    padding:3px;
+    padding-left:10px;
+    border-top-left-radius:20px;
+  }
+
+  .headertall,.headerblack {
+      height:90px;
+  }
+
+  .headertitle {
+    background-color: black;
+    color: rgba(186,171,98,1);
+    font-size:70px;
+    line-height:75%;
+    margin:0px;
+    margin-left:10px;
+    border-radius:0px;
+    float:right;
+  }
+
+  .footer {
+    clear:both;
+    margin:4px;
+    height:20px;
+    padding:3px;
+    padding-left:10px;
+    margin-bottom:20px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+    width:100%;
+  }
+
+  .footertall {
+    height:50px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+  }   
+
+  .headerbutton {
+    float:right;
+    margin-right:10px;
+    height:30px;
+  }
+
+  .gap {
+    background-color: rgba(0,0,0,1);
+    float:right;
+    width:4px;
+    margin-right:4px;
+    height:56px;
+    margin-bottom:0px;
+  }
+
+  .item {
+    color:#000;
+    background-color: rgba(100,150,250,1);
+    margin:4px;
+    margin-left:40px;
+    margin-right:40px;
+    min-height:40px;
+    padding:3px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+  }
+
+
+  #nowplaying { 
+    position:fixed;
+    background-color:#ddd;
+    right:0px;
+    top:0px;
+    left:0px;
+    padding:3px;
+    -webkit-box-shadow: 0px 1px 1px #444;
+    box-shadow: 1px 1px 1px #444;
+  }
+  
+  #npshadow {
+    min-height:42px;
+  }
+
+
+  #nowplaying { 
+    background-color:black;
+    color:  rgba( 243,243,200,0.5);
+    margin:4px;
+    font-size:12vw;
+    height:90px;
+    padding:3px;
+  }
+
+  #panel {
+    margin-top: 10px;
+    overflow-x: hidden;
+
+  }
+
+  .scrolling {
+    overflow-y: scroll;
+    overflow-x: none;
+    width:95%;
+    height:300px;
+    overscroll-behavior:none;
+    margin-bottom:0px;
+  }
+
+  .isplaying {
+    display:none;
+  }
+  .isstopped {
+    display:block;
+  }
+  .ispaused {
+    display:none;
+  }
+
+  .videocategory {
+    display:grid;
+    grid-gap:4px;
+    grid-template-columns: 25px auto 50px 12px;
+    grid-auto-rows: minmax(20px, auto);
+    margin-bottom:20px;
+    margin-left:5px;
+    margin-right:5px;
+  }
+
+  .panelscontainer {
+    display:grid
+  }
+
+  .gridheader {
+    grid-column: 1/3;
+    padding-left:15px;
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family: Okuda 25pt;
+    border-top-left-radius:20px;
+  }
+
+  .gridheaderbutton {
+    grid-column: 3/5;
+    color: #000;
+    background-color: rgba(200,225,250,1);
+    font-family: Okuda 25pt;
+    border-radius:0px;
+    text-align:center;
+  }
+
+  .gridlefter {
+    text-transform:uppercase;
+    font-size:24px;
+    vertical-align:bottom;
+    width:50px;
+    grid-column: 1/2;
+    background-color: rgba(200,225,250,1);
+    border-radius:0px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    padding-left: 5px;
+    position:relative;
+  }
+
+  .textatbottomright {
+    position:absolute;
+    bottom:0px;
+    right:2px;
+  }
+
+  .gridlefter:nth-last-child(2) {
+    margin-bottom:0px;
+  }
+
+  .gridgroup {
+    grid-column: 2/4;
+    color:#000;
+    background-color: rgba(200,150,250,.1);
+    margin: 0px;
+    padding:0px;
+    margin-left:10px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+  }
+
+  .gridgroup:last-child {
+    margin-bottom:0px;
+  }
+    
+  .item {
+    font-size:30px;
+    text-transform:uppercase;
+    color:#000;
+    background-color: rgba(100,150,250,1);
+    margin:0px;
+    margin-left:10px;
+    margin-bottom: 5px;
+    padding:0px;
+    padding-left:10px;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+    float:left;
+    min-width:80px;
+    border-radius:10px;
+  }
+
+/* this crazy thing puts the items in the right bottom corner of a grid.
+ Why? because we rotate the container. Then we rotate the items in the container, so they go a full 360.
+*/  
+  .gridgroup, .item  {
+    transform:rotate(180deg);         /* Moz and IE10+ */
+    -ms-transform:rotate(180deg); 
+    -webkit-transform:rotate(180deg);
+  }
+
+  .gridfooter {
+    background-color: rgba(200,225,250,1);
+    margin-top:0px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:0px;
+  }
+
+
+  </style>      
+
+
+    <script type="text/javascript">
+
+jQuery(document).ready( function() {
+  $ = jQuery;
+      
+  function resize() {
+    var newHeight = $(window).height() - $('.scrolling').offset().top-60;
+    console.log('resize' + newHeight);
+    $('.scrolling').css('height',newHeight);
+  }
+  
+  $(window).resize( resize);
+  setTimeout(resize,500);
+  
+
+  function addActions() {
+    $('.griditem').click( function(e) {
+      color = $(e.srcElement).css("backgroundColor");
+      $(e.srcElement).css("backgroundColor","#cfc");
+      setTimeout(function() {resetButtonState($(e.srcElement),color)},1000);
+      play($(e.srcElement).attr("file"));
+    });
+    
+    $('.addfile').click( function(e) {
+      var directory = $(e.srcElement).attr("dir");
+      var youtubeurl = prompt('Enter video URL to add to ' + directory);
+      if (youtubeurl != null) {
+        addVideo(youtubeurl,directory);
+      }
+    });
+    $('.addcategory').click( function(e) { 
+      var categoryName = prompt('Enter name of new group');
+      if (categoryName != null) {
+        addCategory(categoryName);
+      }
+    });
+  }             
+  
+
+  function listMenus(element,menudata) {
+    $(element).empty();
+    $(element).append('<div class="headertitle">LIGHTHAUS</div><div class="gap"></div><div class="header">' + "&nbsp;" + '</div>');
+    var panels = $('<div class="scrolling panelscontainer"></div>').appendTo($(element));
+    menudata.forEach( function (directory) {
+      panel= $("<div class='gridlefter'><div class='textatbottomright'>" + directory.menu + "</div></div>");
+      var buttongroup= $("<div class='gridgroup' id='" + directory.menu +"'></div>");
+      directory.buttons.forEach( function(button) {
+        buttongroup.append("<div class='item' item=\"" + directory.menu +'/' + button + "\">" + button + "</div>");
+      })
+      panels.append(panel);
+      panels.append(buttongroup);
+    });
+    $(element).append('<div class="footer"></div>');
+    $(element).append('<div>');
+  }          
+  
+  function getListing() {
+    data = [ { "menu": "color",
+               "buttons" : ["red","green","blue"]},
+             { "menu": "effect",
+               "buttons" : ["solid",
+                          "flash",
+                          "wipeleft",
+                          "wiperight",
+                          "sparkle",
+                          "twinkle",
+                          "chaser",
+                          "pingpong",
+                          "rainbow"]},
+             { "menu": "loop",
+               "buttons" : ["glow",
+                          "fire"]
+             }
+            ]
+             
+    listMenus("#panel",data)
+    return menus;
+  }
+
+  function loadAudio(data) {
+    var audios = {};
+    data.forEach( function (directory) {
+      directory.files.forEach( function (audio) {
+        domAudio = document.createElement("audio");
+        filename = directory.directory+"/"+audio;
+        domAudio.src = "../audio/"+ filename;
+        domAudio.controls = false;
+        audios[filename] = domAudio;
+      })
+    });
+    return audios;
+  }
+                      
+    
+  
+  function addVideo(url, directory) {
+    jQuery('#playing').html( 'Downloading: '+url);
+    $.get("/add", {url:url, directory:directory},
+          function (data) { 
+            jQuery('#playing').html( 'Downloaded: '+url);
+            getListing();
+          }, "json");
+  }
+  
+  function addCategory(name) {
+    $.get("/addcategory", {name:name},
+          function (data) {
+            jQuery('#playing').html( data.name);
+            if (data.status == 200) {
+              getListing();
+            } else {
+              jQuery('#playing').html( data.name);
+            }
+          }, "json");
+  }
+  
+  var menus = getListing();
+
+  function play(file) {
+    audios[file].play()
+  }
+  
+  $('#stop').click( function(e) {
+    $('.isplaying').hide();
+    $('.ispaused').hide();
+    $('.isstopped').show();
+    sendomx("<stop>");
+    jQuery('#playing').html("");
+  });
+  
+  
+  $('#pause').click( function(e) {
+    $('.ispaused').show();
+    $('.isplaying').hide();
+    $('.isstopped').hide();
+    sendomx("<pause>");
+  });
+  
+  $('#resume').click( function(e) {
+    $('.ispaused').hide();
+    $('.isplaying').show();
+    $('.isstopped').show();
+    sendomx("<pause>");
+  });
+  
+  
+  $('#rewind').click( function(e) {
+    play("<rewind>");
+  });
+  
+  $('#backward').click( function(e) {
+    play("<backward>");
+  });
+  
+  $('#forward').click( function(e) {
+    play("<forward>");
+  });
+  
+  $('#louder').click( function(e) {
+    play("<louder>");
+  });
+          
+  $('#quieter').click( function(e) {
+    play("<quieter>");
+  });
+          
+          
+          
+  function scrollDiv(element) {
+    element= '#playing';
+    $(element).css("scrollLeft", $(element).css("scrollLeft")-1);
+    if ($(element).css("scrollLeft") < -200) {
+      $(element).css("scrollLeft", 0) 
+    }
+  }
+  setInterval(scrollDiv,200);
+  
+  
+});
+
+
+</script>
+</head>
+  <body>
+    <div id="panel">
+    </div>
+  </body>
+  
+</html>
